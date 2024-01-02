@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+/**
+ * Druid连接池+Apache-Utils，用于获取、释放连接，并且简化了crud操作。
+ */
 public class DruidUtils {
     private static DataSource ds;
 

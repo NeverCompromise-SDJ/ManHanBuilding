@@ -1,5 +1,7 @@
 package com.dj.mhl.view;
 
+import com.dj.mhl.domain.Employee;
+import com.dj.mhl.service.EmployeeService;
 import com.dj.mhl.utils.Utility;
 
 import java.util.Scanner;
@@ -14,6 +16,8 @@ public class MHLView {
     private boolean loop = true;
     //接收用户的输入
     private String choose = "";
+    //用于执行Employee表相关的业务
+    private EmployeeService es = new EmployeeService();
 
     public static void main(String[] args) {
         new MHLView().mainMenu();
@@ -33,8 +37,11 @@ public class MHLView {
                     String empId = Utility.readString(50);
                     System.out.println("请输入密码：");
                     String empPwd = Utility.readString(50);
-                    if (empId.equals("123") && empPwd.equals("123")) {
-                        System.out.println("登录成功");
+                    //根据员工号和密码，查询是否有该员工，返回一个Employee对象
+                    Employee employee = es.getEmployeeByEmpIdAndPwd(empId, empPwd);
+                    //如果的确查询到该员工，则进入员工的二级菜单
+                    if (employee != null) {
+                        System.out.println("===========登录成功[" + employee.getName() + "]===========");
                         while (loop) {
                             System.out.println("===========满汉楼(二级菜单)===========");
                             System.out.println("\t\t1 显示餐桌状态");
@@ -73,8 +80,8 @@ public class MHLView {
                                     break;
                             }
                         }
-                    } else {
-                        System.out.println("登陆失败");
+                    } else {//否则登陆失败
+                        System.out.println("===========登陆失败===========");
                     }
                     break;
                 case "2":

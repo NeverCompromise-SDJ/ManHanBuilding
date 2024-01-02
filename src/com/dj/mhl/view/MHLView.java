@@ -1,14 +1,13 @@
 package com.dj.mhl.view;
 
 import com.dj.mhl.utils.Utility;
-import org.junit.Test;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
 
 /**
  * @author SongDongJie
  * @create 2024/1/1 - 22:09
+ * 满汉楼主界面
  */
 public class MHLView {
     //控制是否退出菜单

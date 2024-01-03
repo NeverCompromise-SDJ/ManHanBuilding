@@ -26,6 +26,8 @@ create table diningTable (
 )charset=utf8;
 
 insert into diningTable values(null, '空','','');
+insert into diningTable values(null, '空','','');
+insert into diningTable values(null, '空','','');
 
 #菜谱
 create table menu (

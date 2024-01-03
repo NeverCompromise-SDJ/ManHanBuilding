@@ -1,9 +1,12 @@
 package com.dj.mhl.view;
 
+import com.dj.mhl.domain.DiningTable;
 import com.dj.mhl.domain.Employee;
+import com.dj.mhl.service.DiningTableService;
 import com.dj.mhl.service.EmployeeService;
 import com.dj.mhl.utils.Utility;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,6 +21,8 @@ public class MHLView {
     private String choose = "";
     //用于执行Employee表相关的业务
     private EmployeeService es = new EmployeeService();
+    //用于执行DiningTable表相关的业务
+    private DiningTableService dts = new DiningTableService();
 
     public static void main(String[] args) {
         new MHLView().mainMenu();
@@ -55,7 +60,7 @@ public class MHLView {
                             choose = Utility.readString(1);
                             switch (choose) {
                                 case "1":
-                                    System.out.println("显示餐桌状态");
+                                    showDiningTableStatus();
                                     break;
                                 case "2":
                                     System.out.println("预定餐桌");
@@ -93,6 +98,19 @@ public class MHLView {
             }
         }
         System.out.println("您已退出满汉楼系统");
+    }
+
+    /**
+     * 显示所有的餐桌状态信息
+     */
+    private void showDiningTableStatus() {
+        //拿到所有的餐桌状态信息（id和status属性有值就行）
+        List<DiningTable> diningTableMsg = dts.getDiningTableStatus();
+        //遍历显示
+        System.out.println("餐桌编号\t餐桌状态");
+        for (DiningTable diningTable : diningTableMsg) {
+            System.out.println(diningTable.getId() + "\t\t" + diningTable.getState());
+        }
     }
 
 }

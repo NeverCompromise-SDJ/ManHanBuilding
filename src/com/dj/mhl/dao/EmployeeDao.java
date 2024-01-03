@@ -9,5 +9,5 @@ import com.dj.mhl.domain.Employee;
  * @create 2024/1/2 - 23:37
  */
 public class EmployeeDao extends BasicDao<Employee> {
-
+    //特殊需求可以写这里
 }

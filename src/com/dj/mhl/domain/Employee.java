@@ -1,9 +1,10 @@
 package com.dj.mhl.domain;
 
 /**
+ * Employee表的POJO（JavaBean）类，是Employee表的映射
+ *
  * @author SongDongJie
  * @create 2024/1/2 - 23:32
- * Employee表的POJO（JavaBean）类，是Employee表的映射
  */
 public class Employee {
     private Integer id;

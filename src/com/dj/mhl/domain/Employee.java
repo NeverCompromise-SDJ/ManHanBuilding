@@ -7,10 +7,10 @@ package com.dj.mhl.domain;
  */
 public class Employee {
     private Integer id;
-    private String empId;
-    private String pwd;
-    private String name;
-    private String job;
+    private String empId;//员工号
+    private String pwd;//密码
+    private String name;//员工名
+    private String job;//员工职位
 
     public Employee() {//Apache-Utils的反射需要
     }

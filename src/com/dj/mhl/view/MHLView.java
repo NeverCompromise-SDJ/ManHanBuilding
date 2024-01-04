@@ -120,17 +120,17 @@ public class MHLView {
     private void bookDiningTable() {
         System.out.println("请选择要预定的餐桌编号(-1退出)：");
         int bookDiningTableId = Utility.readInt(1);
-        if (bookDiningTableId == -1) {//预订餐桌编号为-1时
+        if (bookDiningTableId == -1) {//退出预订
             System.out.println("===========取消预定餐桌===========");
             return;
         }
         System.out.println("确认是否预定(Y/N)：");
         char doubleEnsure = Utility.readConfirmSelection();
-        if (doubleEnsure == 'N') {//确认预订为N时
+        if (doubleEnsure == 'N') {//第二次确认要退出预订
             System.out.println("===========取消预定餐桌===========");
             return;
         }
-        //通过餐桌ID，查询该餐桌的信息
+        //到了这里，可以确认用户是真的要预定餐桌。通过餐桌ID，查询该餐桌的信息
         DiningTable diningTable = dts.getDiningTableById(bookDiningTableId);
         if (diningTable == null) {//餐桌号不存在时
             System.out.println("===========该餐桌不存在===========");
@@ -144,7 +144,7 @@ public class MHLView {
         String bookPersonName = Utility.readString(10);
         System.out.println("请输入预定人电话：");
         String bookPersonTel = Utility.readString(13);
-        //进行预订，返回预订后的结果
+        //到了这里，可以真正执行进行预订，返回预订后的结果
         boolean isBookSuccess = dts.bookTable(bookDiningTableId, bookPersonName, bookPersonTel);
         if (!isBookSuccess) {//预订失败
             System.out.println("===========预订失败===========");

@@ -15,6 +15,7 @@ public class Utility {
 
     /**
      * 功能：读取键盘输入的一个菜单选项，值：1——5的范围
+     *
      * @return 1——5
      */
     public static char readMenuSelection() {
@@ -32,6 +33,7 @@ public class Utility {
 
     /**
      * 功能：读取键盘输入的一个字符
+     *
      * @return 一个字符
      */
     public static char readChar() {
@@ -41,6 +43,7 @@ public class Utility {
 
     /**
      * 功能：读取键盘输入的一个字符，如果直接按回车，则返回指定的默认值；否则返回输入的那个字符
+     *
      * @param defaultValue 指定的默认值
      * @return 默认值或输入的字符
      */
@@ -52,6 +55,7 @@ public class Utility {
 
     /**
      * 功能：读取键盘输入的整型，长度小于2位
+     *
      * @return 整数
      */
     public static int readInt() {
@@ -70,6 +74,7 @@ public class Utility {
 
     /**
      * 功能：读取键盘输入的 整数或默认值，如果直接回车，则返回默认值，否则返回输入的整数
+     *
      * @param defaultValue 指定的默认值
      * @return 整数或默认值
      */
@@ -94,6 +99,7 @@ public class Utility {
 
     /**
      * 功能：读取键盘输入的指定长度的字符串
+     *
      * @param limit 限制的长度
      * @return 指定长度的字符串
      */
@@ -104,7 +110,8 @@ public class Utility {
 
     /**
      * 功能：读取键盘输入的指定长度的字符串或默认值，如果直接回车，返回默认值，否则返回字符串
-     * @param limit 限制的长度
+     *
+     * @param limit        限制的长度
      * @param defaultValue 指定的默认值
      * @return 指定长度的字符串
      */
@@ -116,12 +123,11 @@ public class Utility {
 
 
     /**
-     * 功能：读取键盘输入的确认选项，Y或N
-     * 将小的功能，封装到一个方法中.
+     * 功能：将小写字符输入转换成大写，并且当输入只有Y或N时，该方法才将输入的结果返回。
+     *
      * @return Y或N
      */
     public static char readConfirmSelection() {
-        System.out.println("请输入你的选择(Y/N)");
         char c;
         for (; ; ) {//无限循环
             //在这里，将接受到字符，转成了大写字母
@@ -139,11 +145,12 @@ public class Utility {
 
     /**
      * 功能： 读取一个字符串
-     * @param limit 读取的长度
-     * @param blankReturn 如果为true ,表示 可以读空字符串。 
-     * 					  如果为false表示 不能读空字符串。
      *
-     *	如果输入为空，或者输入大于limit的长度，就会提示重新输入。
+     * @param limit       读取的长度
+     * @param blankReturn 如果为true ,表示 可以读空字符串。
+     *                    如果为false表示 不能读空字符串。
+     *                    <p>
+     *                    如果输入为空，或者输入大于limit的长度，就会提示重新输入。
      * @return
      */
     private static String readKeyBoard(int limit, boolean blankReturn) {

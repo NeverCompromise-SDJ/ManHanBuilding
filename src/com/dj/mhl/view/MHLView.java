@@ -1,5 +1,6 @@
 package com.dj.mhl.view;
 
+import com.alibaba.druid.sql.visitor.functions.Char;
 import com.dj.mhl.domain.DiningTable;
 import com.dj.mhl.domain.Employee;
 import com.dj.mhl.service.DiningTableService;
@@ -63,7 +64,7 @@ public class MHLView {
                                     showDiningTableStatus();
                                     break;
                                 case "2":
-                                    System.out.println("预定餐桌");
+                                    bookDiningTable();
                                     break;
                                 case "3":
                                     System.out.println("显示所有菜品");
@@ -111,6 +112,45 @@ public class MHLView {
         for (DiningTable diningTable : diningTableMsg) {
             System.out.println(diningTable.getId() + "\t\t" + diningTable.getState());
         }
+    }
+
+    /**
+     * 预订餐桌
+     */
+    private void bookDiningTable() {
+        System.out.println("请选择要预定的餐桌编号(-1退出)：");
+        int bookDiningTableId = Utility.readInt(1);
+        if (bookDiningTableId == -1) {//预订餐桌编号为-1时
+            System.out.println("===========取消预定餐桌===========");
+            return;
+        }
+        System.out.println("确认是否预定(Y/N)：");
+        char doubleEnsure = Utility.readConfirmSelection();
+        if (doubleEnsure == 'N') {//确认预订为N时
+            System.out.println("===========取消预定餐桌===========");
+            return;
+        }
+        //通过餐桌ID，查询该餐桌的信息
+        DiningTable diningTable = dts.getDiningTableById(bookDiningTableId);
+        if (diningTable == null) {//餐桌号不存在时
+            System.out.println("===========该餐桌不存在===========");
+            return;
+        }
+        if (!diningTable.getState().equals("空")) { //餐桌非空闲时
+            System.out.println("===========该餐桌已经被预订或者就餐中===========");
+            return;
+        }
+        System.out.println("请输入预定人名字：");
+        String bookPersonName = Utility.readString(10);
+        System.out.println("请输入预定人电话：");
+        String bookPersonTel = Utility.readString(13);
+        //进行预订，返回预订后的结果
+        boolean isBookSuccess = dts.bookTable(bookDiningTableId, bookPersonName, bookPersonTel);
+        if (!isBookSuccess) {//预订失败
+            System.out.println("===========预订失败===========");
+            return;
+        }
+        System.out.println("===========预定" + bookDiningTableId + "号餐桌成功===========");
     }
 
 }

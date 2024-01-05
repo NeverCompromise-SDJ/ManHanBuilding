@@ -3,8 +3,10 @@ package com.dj.mhl.view;
 import com.alibaba.druid.sql.visitor.functions.Char;
 import com.dj.mhl.domain.DiningTable;
 import com.dj.mhl.domain.Employee;
+import com.dj.mhl.domain.Menu;
 import com.dj.mhl.service.DiningTableService;
 import com.dj.mhl.service.EmployeeService;
+import com.dj.mhl.service.MenuService;
 import com.dj.mhl.utils.Utility;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public class MHLView {
     private EmployeeService es = new EmployeeService();
     //用于执行DiningTable表相关的业务
     private DiningTableService dts = new DiningTableService();
+    //用于执行Menu表相关的业务
+    private MenuService ms = new MenuService();
 
     public static void main(String[] args) {
         new MHLView().mainMenu();
@@ -67,7 +71,7 @@ public class MHLView {
                                     bookDiningTable();
                                     break;
                                 case "3":
-                                    System.out.println("显示所有菜品");
+                                    showMenuMsg();
                                     break;
                                 case "4":
                                     System.out.println("点餐服务");
@@ -151,6 +155,18 @@ public class MHLView {
             return;
         }
         System.out.println("===========预定" + bookDiningTableId + "号餐桌成功===========");
+    }
+
+    /**
+     * 展示所有菜品的信息
+     */
+    private void showMenuMsg() {
+        List<Menu> menuList = ms.getMenuMsg();
+        System.out.println("菜品编号\t菜品名\t类别\t价格");
+        for (Menu menu : menuList) {
+            System.out.println(menu.getId() + "\t\t" + menu.getName() + "\t" + menu.getType() + "\t" + menu.getPrice());
+        }
+        System.out.println("===========显示完毕===========");
     }
 
 }

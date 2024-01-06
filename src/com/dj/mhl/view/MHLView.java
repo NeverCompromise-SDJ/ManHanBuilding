@@ -162,9 +162,9 @@ public class MHLView {
      */
     private void showMenuMsg() {
         List<Menu> menuList = ms.getMenuMsg();
-        System.out.println("菜品编号\t菜品名\t类别\t价格");
+        System.out.printf("%-6s%-6s%-6s%-6s%n", "菜品编号", "菜品名", "类别", "价格");
         for (Menu menu : menuList) {
-            System.out.println(menu.getId() + "\t\t" + menu.getName() + "\t" + menu.getType() + "\t" + menu.getPrice());
+            System.out.printf("%-9s%-6s%-6s%-6s%n", menu.getId(), menu.getName(), menu.getType(), menu.getPrice());
         }
         System.out.println("===========显示完毕===========");
     }

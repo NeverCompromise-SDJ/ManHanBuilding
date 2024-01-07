@@ -1,9 +1,9 @@
 package com.dj.mhl.view;
 
-import com.alibaba.druid.sql.visitor.functions.Char;
 import com.dj.mhl.domain.DiningTable;
 import com.dj.mhl.domain.Employee;
 import com.dj.mhl.domain.Menu;
+import com.dj.mhl.service.BillService;
 import com.dj.mhl.service.DiningTableService;
 import com.dj.mhl.service.EmployeeService;
 import com.dj.mhl.service.MenuService;
@@ -28,6 +28,8 @@ public class MHLView {
     private DiningTableService dts = new DiningTableService();
     //用于执行Menu表相关的业务
     private MenuService ms = new MenuService();
+    //用于执行Bill表相关的业务
+    private BillService bs = new BillService();
 
     public static void main(String[] args) {
         new MHLView().mainMenu();
@@ -74,7 +76,7 @@ public class MHLView {
                                     showMenuMsg();
                                     break;
                                 case "4":
-                                    System.out.println("点餐服务");
+                                    orderMenu();
                                     break;
                                 case "5":
                                     System.out.println("查看账单");
@@ -140,7 +142,7 @@ public class MHLView {
             System.out.println("===========该餐桌不存在===========");
             return;
         }
-        if (!diningTable.getState().equals("空")) { //餐桌非空闲时
+        if (!diningTable.getState().equals("空闲")) { //餐桌非空闲时
             System.out.println("===========该餐桌已经被预订或者就餐中===========");
             return;
         }
@@ -167,6 +169,56 @@ public class MHLView {
             System.out.printf("%-9s%-6s%-6s%-6s%n", menu.getId(), menu.getName(), menu.getType(), menu.getPrice());
         }
         System.out.println("===========显示完毕===========");
+    }
+
+    /**
+     * 完成点餐
+     */
+    private void orderMenu() {
+        System.out.println("===========点餐服务===========");
+        System.out.println("请选择点餐的桌号(-1退出)：");
+        int orderDiningTableId = Utility.readInt();
+        if (orderDiningTableId == -1) {//取消点餐
+            System.out.println("===========取消点餐===========");
+            return;
+        }
+        if (dts.getDiningTableById(orderDiningTableId) == null) {//点餐的桌号不存在
+            System.out.println("===========点餐的桌号不存在===========");
+            return;
+        }
+        System.out.println("请选择菜品编号(-1退出)：");
+        int orderMenuId = Utility.readInt();
+        if (orderMenuId == -1) {//取消点餐
+            System.out.println("===========取消点餐===========");
+            return;
+        }
+        if (ms.getMenuById(orderMenuId) == null) {//点的菜品不存在
+            System.out.println("===========点的菜品不存在===========");
+            return;
+        }
+        System.out.println("请选择菜品数量(-1退出)：");
+        int orderNums = Utility.readInt();
+        if (orderNums == -1) {//取消点餐
+            System.out.println("===========取消点餐===========");
+            return;
+        }
+        if (orderNums <= 0) {
+            System.out.println("===========点餐数量不正确，应大于0的整数===========");
+            return;
+        }
+        System.out.println("请选择是否点这个菜(Y/N)：");
+        char confirmOrder = Utility.readConfirmSelection();
+        if (confirmOrder == 'N') {
+            System.out.println("===========取消点餐===========");
+            return;
+        }
+        //真正开始执行点餐操作
+        boolean isOrderSuccess = bs.orderMenu(orderMenuId, orderNums, orderDiningTableId);
+        if (!isOrderSuccess) {
+            System.out.println("===========点餐失败===========");
+            return;
+        }
+        System.out.println("===========点餐成功===========");
     }
 
 }

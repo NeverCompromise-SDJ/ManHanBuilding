@@ -20,7 +20,7 @@ insert into employee values(null, '666', md5('123456'), '老韩', '经理');
 #餐桌表
 create table diningTable (
 	id int primary key auto_increment, #自增, 表示餐桌编号
-	state varchar(20) not null default '',#餐桌的状态
+	state varchar(20) not null default '',#餐桌的状态：‘已预定’，‘就餐中’
 	orderName varchar(50) not null default '',#预订人的名字
 	orderTel varchar(20) not null default ''
 )charset=utf8;
@@ -49,13 +49,13 @@ insert into menu values(null, '鸡蛋汤', '汤类', 16);
 #账单流水, 考虑可以分开结账, 并考虑将来分别统计各个不同菜品的销售情况
 create table bill (
 	id int primary key auto_increment, #自增主键
-	billId varchar(50) not null default '',#账单号可以按照自己规则生成 UUID
+	billId varchar(50) not null default '',#账单号，可以按照自己规则生成 UUID
 	menuId int not null default 0,#菜品的编号, 也可以使用外键
 	nums SMALLINT not null default 0,#份数
 	money double not null default 0, #金额
 	diningTableId int not null default 0, #餐桌
 	billDate datetime not null ,#订单日期
-	state varchar(50) not null default '' # 状态 '未结账' , '已经结账', '挂单'
+	state varchar(50) not null default '' # 订单状态：‘未结账’，‘已经结账’，‘挂单’，‘现金’，‘支付宝’，‘微信’，‘坏账（吃霸王餐）’
 )charset=utf8;
 
 insert into menu values(null,?,?,?,0,?,now(),'未结账')

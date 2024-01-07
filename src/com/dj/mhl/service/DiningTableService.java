@@ -12,6 +12,7 @@ import java.util.List;
  * @create 2024/1/3 - 23:08
  */
 public class DiningTableService {
+    //调用DiningTableDao，来完成复杂业务的逻辑处理
     private DiningTableDao dtt = new DiningTableDao();
 
     /**
@@ -45,6 +46,17 @@ public class DiningTableService {
      */
     public boolean bookTable(int id, String orderName, String orderTel) {
         int affectedRows = dtt.update("update diningTable set state='已预定',orderName=?,orderTel=? where id=?", orderName, orderTel, id);
+        return affectedRows > 0;
+    }
+
+    /**
+     * 更新餐桌状态
+     *
+     * @param id 餐桌id
+     * @return 返回是否更新成功，true为成功，false为失败
+     */
+    public boolean updateDiningTableState(Integer id, String state) {
+        int affectedRows = dtt.update("update diningTable set state=? where id=?", state, id);
         return affectedRows > 0;
     }
 }

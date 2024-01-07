@@ -6,6 +6,7 @@ import com.dj.mhl.domain.Menu;
 import java.util.List;
 
 public class MenuService {
+    //调用MenuDao，来完成复杂业务的逻辑处理
     private MenuDao md = new MenuDao();
 
     /**
@@ -16,5 +17,17 @@ public class MenuService {
     public List<Menu> getMenuMsg() {
         List<Menu> menuList = md.queryMultiplyRow("select * from menu", Menu.class);
         return menuList;
+    }
+
+
+    /**
+     * 通过菜品ID，得到对应的菜品信息
+     *
+     * @param id 菜品ID
+     * @return 返回得到的单个菜品信息，没有对应菜品则返回null
+     */
+    public Menu getMenuById(Integer id) {
+        Menu menu = md.querySingleRow("select * from menu where id=?", Menu.class, id);
+        return menu;
     }
 }

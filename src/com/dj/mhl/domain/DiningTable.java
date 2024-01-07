@@ -8,7 +8,7 @@ package com.dj.mhl.domain;
  */
 public class DiningTable {
     private Integer id;//餐桌编号
-    private String state;//餐桌状态
+    private String state;//餐桌状态：‘空闲’，‘已预定’，‘就餐中’
     private String orderName;//预定人名字
     private String orderTel;//预定人电话
 

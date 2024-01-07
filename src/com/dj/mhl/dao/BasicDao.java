@@ -51,7 +51,7 @@ public class BasicDao<T> {//泛型制定具体类型
             connection = DruidUtils.getConnection();
             return queryRunner.query(connection, sql, new BeanListHandler<T>(cls), param);
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         } finally {
             DruidUtils.close(connection, null, null);
         }

@@ -1,8 +1,10 @@
 package com.dj.mhl.service;
 
 import com.dj.mhl.dao.BillDao;
+import com.dj.mhl.domain.Bill;
 import com.dj.mhl.domain.Menu;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -45,5 +47,15 @@ public class BillService {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 返回所有账单信息
+     *
+     * @return 返回含有所有账单的一个ArrayList集合
+     */
+    public List<Bill> getAllBills() {
+        List<Bill> billList = bd.queryMultiplyRow("select * from bill", Bill.class);
+        return billList;
     }
 }

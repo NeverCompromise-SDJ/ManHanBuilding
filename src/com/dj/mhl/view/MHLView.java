@@ -1,5 +1,6 @@
 package com.dj.mhl.view;
 
+import com.dj.mhl.domain.Bill;
 import com.dj.mhl.domain.DiningTable;
 import com.dj.mhl.domain.Employee;
 import com.dj.mhl.domain.Menu;
@@ -79,7 +80,7 @@ public class MHLView {
                                     orderMenu();
                                     break;
                                 case "5":
-                                    System.out.println("查看账单");
+                                    showAllBills();
                                     break;
                                 case "6":
                                     System.out.println("结账");
@@ -219,6 +220,16 @@ public class MHLView {
             return;
         }
         System.out.println("===========点餐成功===========");
+    }
+
+    private void showAllBills() {
+        List<Bill> billList = bs.getAllBills();
+        System.out.printf("%-6s%-6s%-6s%-6s%-6s%-22s%s%n", "编号", "菜品号", "菜品数量", "金额", "桌号", "日期", "状态");
+        for (Bill bill : billList) {
+            System.out.printf("%-8s%-8s%-9s%-8s%-7s%-24s%s%n", bill.getId(), bill.getMenuId(), bill.getNums(),
+                    bill.getMoney(), bill.getDiningTableId(), bill.getBillDate(), bill.getState());
+        }
+        System.out.println("===========显示完毕===========");
     }
 
 }

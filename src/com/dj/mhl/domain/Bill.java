@@ -1,7 +1,6 @@
 package com.dj.mhl.domain;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * bill表的JavaBean类

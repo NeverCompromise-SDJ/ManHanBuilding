@@ -2,7 +2,6 @@ package com.dj.mhl.service;
 
 import com.dj.mhl.dao.BillDao;
 import com.dj.mhl.domain.Bill;
-import com.dj.mhl.domain.Menu;
 
 import java.util.List;
 import java.util.UUID;

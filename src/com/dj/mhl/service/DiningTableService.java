@@ -52,11 +52,23 @@ public class DiningTableService {
     /**
      * 更新餐桌状态
      *
-     * @param id 餐桌id
+     * @param id    餐桌id
+     * @param state 需要更新到的餐桌状态
      * @return 返回是否更新成功，true为成功，false为失败
      */
     public boolean updateDiningTableState(Integer id, String state) {
         int affectedRows = dtt.update("update diningTable set state=? where id=?", state, id);
+        return affectedRows > 0;
+    }
+
+    /**
+     * 将指定餐桌的状态改为空闲状态，并且将预订人名称、电话置空
+     *
+     * @param id 餐桌id
+     * @return 返回是否更新成功，true为成功，false为失败
+     */
+    public boolean updateDiningTableToFree(Integer id) {
+        int affectedRows = dtt.update("update diningTable set state='空闲',orderName='',orderTel='' where id=?", id);
         return affectedRows > 0;
     }
 }

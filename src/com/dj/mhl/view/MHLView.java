@@ -83,7 +83,7 @@ public class MHLView {
                                     showAllBills();
                                     break;
                                 case "6":
-                                    System.out.println("结账");
+                                    payBills();
                                     break;
                                 case "9":
                                     loop = false;//退出循环
@@ -179,36 +179,43 @@ public class MHLView {
         System.out.println("===========点餐服务===========");
         System.out.println("请选择点餐的桌号(-1退出)：");
         int orderDiningTableId = Utility.readInt();
-        if (orderDiningTableId == -1) {//取消点餐
+        //校验是否取消点餐
+        if (orderDiningTableId == -1) {
             System.out.println("===========取消点餐===========");
             return;
         }
-        if (dts.getDiningTableById(orderDiningTableId) == null) {//点餐的桌号不存在
+        //校验点餐的桌号是否存在
+        if (dts.getDiningTableById(orderDiningTableId) == null) {
             System.out.println("===========点餐的桌号不存在===========");
             return;
         }
         System.out.println("请选择菜品编号(-1退出)：");
         int orderMenuId = Utility.readInt();
-        if (orderMenuId == -1) {//取消点餐
+        //校验是否取消点餐
+        if (orderMenuId == -1) {
             System.out.println("===========取消点餐===========");
             return;
         }
-        if (ms.getMenuById(orderMenuId) == null) {//点的菜品不存在
+        //校验点的菜品是否存在
+        if (ms.getMenuById(orderMenuId) == null) {
             System.out.println("===========点的菜品不存在===========");
             return;
         }
         System.out.println("请选择菜品数量(-1退出)：");
         int orderNums = Utility.readInt();
-        if (orderNums == -1) {//取消点餐
+        //校验是否取消点餐
+        if (orderNums == -1) {
             System.out.println("===========取消点餐===========");
             return;
         }
+        //校验点餐数量
         if (orderNums <= 0) {
             System.out.println("===========点餐数量不正确，应大于0的整数===========");
             return;
         }
         System.out.println("请选择是否点这个菜(Y/N)：");
         char confirmOrder = Utility.readConfirmSelection();
+        //校验是否取消点餐
         if (confirmOrder == 'N') {
             System.out.println("===========取消点餐===========");
             return;
@@ -230,6 +237,49 @@ public class MHLView {
                     bill.getMoney(), bill.getDiningTableId(), bill.getBillDate(), bill.getState());
         }
         System.out.println("===========显示完毕===========");
+    }
+
+    private void payBills() {
+        System.out.println("===========结账服务===========");
+        System.out.println("请选择要结账的餐桌编号(-1退出)：");
+        int checkoutDiningTableId = Utility.readInt();
+        //校验是否取消结账
+        if (checkoutDiningTableId == -1) {//取消结账
+            System.out.println("===========取消结账===========");
+            return;
+        }
+        //校验餐桌是否存在
+        DiningTable diningTable = dts.getDiningTableById(checkoutDiningTableId);
+        if (diningTable == null) {
+            System.out.println("===========该餐桌不存在===========");
+            return;
+        }
+        //校验餐桌是否有未结账的账单
+        boolean hasUncheckedBills = bs.hasUncheckedBillsByDiningTableId(checkoutDiningTableId);
+        if (!hasUncheckedBills) {
+            System.out.println("===========该餐桌没有未结账的账单，无需结账===========");
+            return;
+        }
+        System.out.println("结账的方式(现金/支付宝/微信) 回车表示退出：");
+        String payMethod = Utility.readString(20, "");
+        //校验是否取消结账
+        if (payMethod.equals("")) {
+            System.out.println("===========取消结账===========");
+            return;
+        }
+        System.out.println("确认是否结账(Y/N)：");
+        char isConfirmPay = Utility.readConfirmSelection();
+        //校验是否取消结账
+        if (isConfirmPay == 'N') {
+            System.out.println("===========取消结账===========");
+            return;
+        }
+        //真正开始结账
+        boolean isCheckoutSuccess = bs.payBills(checkoutDiningTableId, payMethod);
+        if (!isCheckoutSuccess) {
+            System.out.println("===========结账失败===========");
+        }
+        System.out.println("===========" + checkoutDiningTableId + "号桌结账成功===========");
     }
 
 }

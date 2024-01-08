@@ -9,7 +9,7 @@ create table employee (
 	pwd char(32) not null default '',#密码md5
 	name varchar(50) not null default '',#姓名
 	job varchar(50) not null default '' #岗位
-)charset=utf8;
+)charset=utf8mb4;
 
 #测试数据
 insert into employee values(null, '6668612', md5('123456'), '张三丰', '经理');
@@ -20,14 +20,14 @@ insert into employee values(null, '666', md5('123456'), '老韩', '经理');
 #餐桌表
 create table diningTable (
 	id int primary key auto_increment, #自增, 表示餐桌编号
-	state varchar(20) not null default '',#餐桌的状态：‘已预定’，‘就餐中’
+	state varchar(20) not null default '',#餐桌的状态：'空闲'，‘已预定’，‘就餐中’
 	orderName varchar(50) not null default '',#预订人的名字
 	orderTel varchar(20) not null default ''
-)charset=utf8;
+)charset=utf8mb4;
 
-insert into diningTable values(null, '空','','');
-insert into diningTable values(null, '空','','');
-insert into diningTable values(null, '空','','');
+insert into diningTable values(null, '空闲','','');
+insert into diningTable values(null, '空闲','','');
+insert into diningTable values(null, '空闲','','');
 
 #菜谱
 create table menu (
@@ -35,7 +35,7 @@ create table menu (
 	name varchar(50) not null default '',#菜品名称
 	type varchar(50) not null default '', #菜品种类
 	price double not null default 0#价格
-)charset=utf8;
+)charset=utf8mb4;
 
 insert into menu values(null, '八宝饭', '主食类', 10);
 insert into menu values(null, '叉烧包', '主食类', 20);
@@ -56,7 +56,7 @@ create table bill (
 	diningTableId int not null default 0, #餐桌
 	billDate datetime not null ,#订单日期
 	state varchar(50) not null default '' # 订单状态：‘未结账’，‘已经结账’，‘挂单’，‘现金’，‘支付宝’，‘微信’，‘坏账（吃霸王餐）’
-)charset=utf8;
+)charset=utf8mb4;
 
 insert into menu values(null,?,?,?,0,?,now(),'未结账')
 drop table bill;

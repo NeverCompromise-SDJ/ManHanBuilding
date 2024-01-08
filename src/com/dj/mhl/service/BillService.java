@@ -57,4 +57,39 @@ public class BillService {
         List<Bill> billList = bd.queryMultiplyRow("select * from bill", Bill.class);
         return billList;
     }
+
+    /**
+     * 查询指定餐桌号的餐桌中，是否有未结账的订单
+     *
+     * @param diningTableId 餐桌号
+     * @return 返回指定餐桌是否有未结账的订单，true为有未结账的订单，false为没有未结账的订单。
+     */
+    public boolean hasUncheckedBillsByDiningTableId(Integer diningTableId) {
+        Bill bill = bd.querySingleRow("select * from bill where diningTableId=? and state='未结账' limit 0,1",
+                Bill.class, diningTableId);//使用limit可以提高查询效率
+        return bill != null;
+    }
+
+    /**
+     * 结账前置条件：1.餐桌存在（View层判断） 2.该餐桌有未结账的账单（View层判断）
+     * 结账步骤：1.更新bill表的state（只更新未结账的账单，不要修改其他状态的账单） 2.更新diningTable表的state
+     *
+     * @param diningTableId 结账的餐桌号
+     * @param payMethod     结账的方式
+     * @return 返回结账是否成功，true为成功，false为不成功
+     */
+    public boolean payBills(Integer diningTableId, String payMethod) {
+        //更新bill表的state
+        int affectedRows = bd.update("update bill set state=? where diningTableId=? and state='未结账'",
+                payMethod, diningTableId);
+        if (affectedRows == 0) {//更新失败
+            return false;
+        }
+        //更新diningTable表的state
+        boolean isUpdateSuccess = dts.updateDiningTableToFree(diningTableId);
+        if (!isUpdateSuccess) {
+            return false;
+        }
+        return true;
+    }
 }

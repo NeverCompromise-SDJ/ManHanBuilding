@@ -6,7 +6,7 @@ import com.dj.mhl.domain.Menu;
 import java.util.List;
 
 public class MenuService {
-    //调用MenuDao，来完成复杂业务的逻辑处理
+    //调用MenuDao，来完成Menu表相关业务的逻辑处理
     private MenuDao md = new MenuDao();
 
     /**

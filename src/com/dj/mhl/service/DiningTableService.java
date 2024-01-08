@@ -12,7 +12,7 @@ import java.util.List;
  * @create 2024/1/3 - 23:08
  */
 public class DiningTableService {
-    //调用DiningTableDao，来完成复杂业务的逻辑处理
+    //调用DiningTableDao，来完成diningTable表相关的业务逻辑处理
     private DiningTableDao dtt = new DiningTableDao();
 
     /**

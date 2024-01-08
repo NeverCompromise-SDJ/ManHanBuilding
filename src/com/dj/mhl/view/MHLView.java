@@ -1,9 +1,6 @@
 package com.dj.mhl.view;
 
-import com.dj.mhl.domain.Bill;
-import com.dj.mhl.domain.DiningTable;
-import com.dj.mhl.domain.Employee;
-import com.dj.mhl.domain.Menu;
+import com.dj.mhl.domain.*;
 import com.dj.mhl.service.BillService;
 import com.dj.mhl.service.DiningTableService;
 import com.dj.mhl.service.EmployeeService;
@@ -80,7 +77,8 @@ public class MHLView {
                                     orderMenu();
                                     break;
                                 case "5":
-                                    showAllBills();
+//                                    showAllBills();
+                                    showAllBillsIncludeMenuName();
                                     break;
                                 case "6":
                                     payBills();
@@ -229,12 +227,29 @@ public class MHLView {
         System.out.println("===========点餐成功===========");
     }
 
-    private void showAllBills() {
-        List<Bill> billList = bs.getAllBills();
-        System.out.printf("%-6s%-6s%-6s%-6s%-6s%-22s%s%n", "编号", "菜品号", "菜品数量", "金额", "桌号", "日期", "状态");
-        for (Bill bill : billList) {
-            System.out.printf("%-8s%-8s%-9s%-8s%-7s%-24s%s%n", bill.getId(), bill.getMenuId(), bill.getNums(),
-                    bill.getMoney(), bill.getDiningTableId(), bill.getBillDate(), bill.getState());
+//    /**
+//     * 查看所有订单信息（不包含菜品编号对应的菜品名）
+//     */
+//    private void showAllBills() {
+//        List<Bill> billList = bs.getAllBills();
+//        System.out.printf("%-6s%-6s%-6s%-6s%-6s%-22s%s%n", "编号", "菜品号", "菜品数量", "金额", "桌号", "日期", "状态");
+//        for (Bill bill : billList) {
+//            System.out.printf("%-8s%-8s%-9s%-8s%-7s%-24s%s%n", bill.getId(), bill.getMenuId(), bill.getNums(),
+//                    bill.getMoney(), bill.getDiningTableId(), bill.getBillDate(), bill.getState());
+//        }
+//        System.out.println("===========显示完毕===========");
+//    }
+
+    /**
+     * 查看所有订单信息（包含菜品编号对应的菜品名）
+     */
+    private void showAllBillsIncludeMenuName() {
+        List<MultiTableBean> multiTableBeanList = bs.getAllBillsIncludeMenuName();
+        System.out.printf("%-6s%-6s%-6s%-6s%-6s%-6s%-22s%s%n", "编号", "菜品号", "菜品名", "菜品数量", "金额", "桌号", "日期", "状态");
+        for (MultiTableBean multiTableBean : multiTableBeanList) {
+            System.out.printf("%-8s%-8s%-6s%-9s%-8s%-7s%-24s%s%n", multiTableBean.getId(), multiTableBean.getMenuId(),
+                    multiTableBean.getName(), multiTableBean.getNums(), multiTableBean.getMoney(),
+                    multiTableBean.getDiningTableId(), multiTableBean.getBillDate(), multiTableBean.getState());
         }
         System.out.println("===========显示完毕===========");
     }

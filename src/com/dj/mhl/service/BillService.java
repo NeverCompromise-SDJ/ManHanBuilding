@@ -1,7 +1,9 @@
 package com.dj.mhl.service;
 
 import com.dj.mhl.dao.BillDao;
+import com.dj.mhl.dao.MultiTableBeanDao;
 import com.dj.mhl.domain.Bill;
+import com.dj.mhl.domain.MultiTableBean;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,12 +15,14 @@ import java.util.UUID;
  * @create 2024/1/7 - 17:45
  */
 public class BillService {
-    //调用BillDao，来完成复杂的业务逻辑
+    //调用BillDao，来完成bill表相关的业务逻辑
     private BillDao bd = new BillDao();
     //调用MenuService的方法，来完成多表的协同需求
     private MenuService ms = new MenuService();
     //调用DiningTableService的方法，来完成多表的协同需求
     private DiningTableService dts = new DiningTableService();
+    //调用MultiTableBeanDao，来完成多表的业务逻辑
+    private MultiTableBeanDao mtbd = new MultiTableBeanDao();
 
     /**
      * 点餐：1.生成订单 2.更新餐桌状态
@@ -49,13 +53,24 @@ public class BillService {
     }
 
     /**
-     * 返回所有账单信息
+     * 返回所有账单信息（不包含菜品编号对应的菜品名）
      *
      * @return 返回含有所有账单的一个ArrayList集合
      */
     public List<Bill> getAllBills() {
         List<Bill> billList = bd.queryMultiplyRow("select * from bill", Bill.class);
         return billList;
+    }
+
+    /**
+     * 返回所有账单信息，包含菜品编号对应的菜品名（多表查询）
+     *
+     * @return 返回含有所有账单的一个ArrayList集合
+     */
+    public List<MultiTableBean> getAllBillsIncludeMenuName() {
+        List<MultiTableBean> multiTableBeanList = mtbd.queryMultiplyRow("select bill.*,menu.name from bill,menu where" +
+                " bill.menuId=menu.id", MultiTableBean.class);
+        return multiTableBeanList;
     }
 
     /**

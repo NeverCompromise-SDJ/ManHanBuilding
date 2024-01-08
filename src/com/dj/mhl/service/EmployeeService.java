@@ -11,7 +11,7 @@ import com.dj.mhl.domain.Employee;
  * @create 2024/1/2 - 23:37
  */
 public class EmployeeService {
-    //调用EmployeeDao，来完成复杂业务的逻辑处理
+    //调用EmployeeDao，来完成Employee表相关业务的逻辑处理
     private EmployeeDao ed = new EmployeeDao();
 
     /**
